@@ -1,0 +1,12 @@
+.aside {
+	grid-area: aside;
+	background-color: grey;
+}
+
+.item {
+	color: tomato;
+}
+
+.item.active {
+	color: gold;
+}
