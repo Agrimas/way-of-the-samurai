@@ -1,10 +1,6 @@
-.main {
-	grid-area: main;
-	background-color: indianred;
-}
-
-.main_photo img {
+.profile_photo {
 	width: 100%;
 	height: 100px;
 	object-fit: cover;
+	object-position: 0% 50%;
 }

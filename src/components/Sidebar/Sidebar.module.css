@@ -1,12 +1,18 @@
 .aside {
 	grid-area: aside;
-	background-color: grey;
+	background-color: skyblue;
+	padding: 15px;
 }
 
-.item {
+.item a{
 	color: tomato;
+	text-decoration: none;
 }
 
-.item.active {
+.item a:hover{
+	color: slateblue;
+}
+
+.item a.active {
 	color: gold;
 }
