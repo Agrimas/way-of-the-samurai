@@ -1,0 +1,24 @@
+/* Dialogs */
+.dialogs {
+	display: grid;
+	grid-template-columns: 2fr 10fr;
+	height: 100%;
+}
+
+.dialogs_items {
+	padding: 10px;
+}
+
+.dialog {
+	color: brown;
+}
+
+.dialog_active {
+	color: gold;
+}
+
+/* Message */
+.messages {
+	background-color: blueviolet;
+	padding: 10px;
+}
