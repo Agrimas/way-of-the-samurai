@@ -1,24 +1,55 @@
 /* Message */
 .dialogs {
-	display: grid;
-	grid-template-columns: 2fr 10fr;
-	height: 100%;
-}
-
-.dialogs_items {
-	padding: 10px;
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+    height: 100%;
 }
 
 .dialog {
-	color: brown;
+    color: brown;
+    margin-bottom: 5px;
+}
+
+.link {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+img.avatar {
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
 
 .dialog_active {
-	color: gold;
+    background-color: gold;
+    border: 1px solid black;
 }
+
 
 /* Message */
 .messages {
-	background-color: blueviolet;
-	padding: 10px;
+    border: 1px solid black;
+    background-color: white;
+    padding: 30px;
+}
+
+.message {
+    padding: 5px;
+}
+
+.message span {
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: greenyellow;
+}
+
+.isMy {
+    text-align: right;
+}
+
+.isMy span{
+    background-color: skyblue;
 }

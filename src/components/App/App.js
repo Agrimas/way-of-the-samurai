@@ -9,6 +9,8 @@ import Dialogs from "./../Dialogs/Dialogs"
 import News from "./../News/News"
 import Music from "./../Music/Music"
 import Settings from "./../Settings/Settings"
+import state from "../../redux/state";
+import Friend from "../Friends/Friend/Friend";
 
 const App = (props) => {
     return (
@@ -17,12 +19,18 @@ const App = (props) => {
                 <Header/>
                 <Sidebar/>
                 <main>
-                    <Route path='/profile' render={() => <Profile PostData={props.PostData}/>}/>
-                    <Route path='/dialogs'
-                           render={() => <Dialogs dialogsData={props.dialogsData} messagesData={props.messagesData}/>}/>
+                    <Route path='/profile' render={() => <Profile state={props.appState.profilePage}/>}/>
+                    <Route path='/dialogs' render={() => <Dialogs state={props.appState.messagesPage}/>}/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
                     <Route path='/settings' component={Settings}/>
+
+                    <Route path={`/friends/${props.appState.sidebar.friends[0].name}`}
+                           render={() => <Friend state={props.appState.sidebar.friends[0]}/>}/>
+                    <Route
+                        path={`/friends/${props.appState.sidebar.friends[1].name}`}
+                        render={() => <Friend state={props.appState.sidebar.friends[1]}/>}/>
+
                 </main>
             </div>
         </BrowserRouter>
