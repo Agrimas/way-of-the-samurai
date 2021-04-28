@@ -1,12 +1,9 @@
 let state = {
     profilePage: {
         PostData: [
-            {last: true, likeCount: 5},
-            {last: false, likeCount: 6},
-            {last: false, likeCount: 6},
-            {last: false, likeCount: 8},
-            {last: false, likeCount: 9},
-            {last: false, likeCount: 16},
+            {id: 1, likeCount: 5, text: 'lorem1'},
+            {id: 2, likeCount: 6, text: 'lorem2'},
+            {id: 3, likeCount: 6, text: 'lorem3'},
         ]
     },
     messagesPage: {
@@ -34,6 +31,15 @@ let state = {
             },
         ]
     }
+}
+
+export function addPost(text) {
+    let newPost = {
+        id: 456,
+        text: text,
+        likeCount: 0
+    }
+    state.profilePage.PostData.push(newPost);
 }
 
 export default state;
