@@ -1,5 +1,6 @@
 let state = {
     profilePage: {
+        value: '',
         PostData: [
             {id: 1, likeCount: 5, text: 'lorem1'},
             {id: 2, likeCount: 6, text: 'lorem2'},
@@ -7,6 +8,7 @@ let state = {
         ]
     },
     messagesPage: {
+        valueTextarea: '',
         dialogsData: [
             {id: 1, name: 'Anton'},
             {id: 2, name: 'Dima'},
@@ -33,13 +35,44 @@ let state = {
     }
 }
 
-export function addPost(text) {
+let rerenderEntireTree = () => {
+    console.log('state was changed');
+}
+
+export function addPost() {
     let newPost = {
         id: 456,
-        text: text,
+        text: state.profilePage.value,
         likeCount: 0
     }
     state.profilePage.PostData.push(newPost);
+    state.profilePage.value = '';
+    rerenderEntireTree(state);
+}
+
+export function updateNewPostText(text) {
+    state.profilePage.value = text;
+    rerenderEntireTree(state);
+}
+
+export function sendMessage() {
+    let newMessage = {
+        id: 4561,
+        message: state.messagesPage.valueTextarea,
+        isMy: true
+    }
+    state.messagesPage.messagesData.push(newMessage);
+    state.messagesPage.valueTextarea = '';
+    rerenderEntireTree(state);
+}
+
+export function UpdateMessageTextarea(text) {
+    state.messagesPage.valueTextarea = text;
+    rerenderEntireTree(state);
+}
+
+export const subscribe = (observer)=>{
+    rerenderEntireTree = observer;
 }
 
 export default state;

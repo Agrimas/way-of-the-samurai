@@ -8,11 +8,9 @@ const Dialogs = function (props) {
 
     let messagesElements = props.state.messagesData.map(message => <Message text={message.message}
                                                                             isMy={message.isMy}/>)
-    let sendMessageText = React.createRef();
 
-    function sendMessage(event) {
-        console.log(sendMessageText.current.value);
-        event.preventDefault();
+    function onChangeHandler(e) {
+        props.UpdateMessageTextarea(e.currentTarget.value);
     }
 
     return (
@@ -26,8 +24,8 @@ const Dialogs = function (props) {
                 </div>
                 <div className={Classes.formContainer}>
                     <form>
-                        <textarea ref={sendMessageText}/>
-                        <button type='submit' onClick={sendMessage}>Send</button>
+                        <textarea value={props.state.valueTextarea} onChange={onChangeHandler}/>
+                        <button type='button' onClick={props.sendMessage}>Send</button>
                     </form>
                 </div>
             </div>
