@@ -17,11 +17,13 @@ const App = (props) => {
             <Sidebar/>
             <main>
                 <Route path='/profile'
-                       render={() => <Profile profilePage={props.appState.profilePage} addPost={props.addPost}
-                                              updateNewPostText={props.updateNewPostText}/>}/>
+                       render={() => <Profile profilePage={props.appState.profilePage}
+                                              addPost={props.appStore.addPost.bind(props.appStore)}
+                                              updateNewPostText={props.appStore.updateNewPostText.bind(props.appStore)}/>}/>
                 <Route path='/dialogs'
-                       render={() => <Dialogs state={props.appState.messagesPage} sendMessage={props.sendMessage}
-                                              UpdateMessageTextarea={props.UpdateMessageTextarea}/>}/>
+                       render={() => <Dialogs state={props.appState.messagesPage}
+                                              sendMessage={props.appStore.sendMessage.bind(props.appStore)}
+                                              updateMessageTextarea={props.appStore.updateMessageTextarea.bind(props.appStore)}/>}/>
                 <Route path='/news' component={News}/>
                 <Route path='/music' component={Music}/>
                 <Route path='/settings' component={Settings}/>

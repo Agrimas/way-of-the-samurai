@@ -10,7 +10,7 @@ const Dialogs = function (props) {
                                                                             isMy={message.isMy}/>)
 
     function onChangeHandler(e) {
-        props.UpdateMessageTextarea(e.currentTarget.value);
+        props.updateMessageTextarea(e.currentTarget.value);
     }
 
     return (
