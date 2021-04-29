@@ -2,6 +2,9 @@ import React from 'react';
 import Classes from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
+import {sendMessageActionCreator, updateMessageTextareaActionCreator} from "../../redux/state";
+
+
 
 const Dialogs = function (props) {
     let dialogsElements = props.state.dialogsData.map(dialog => <DialogItem name={dialog.name} id={dialog.id}/>);
@@ -10,7 +13,13 @@ const Dialogs = function (props) {
                                                                             isMy={message.isMy}/>)
 
     function onChangeHandler(e) {
-        props.updateMessageTextarea(e.currentTarget.value);
+        const action = updateMessageTextareaActionCreator(e.currentTarget.value);
+        props.dispatch(action);
+    }
+
+    function sendMessage() {
+        const action = sendMessageActionCreator();
+        props.dispatch(action)
     }
 
     return (
@@ -25,7 +34,7 @@ const Dialogs = function (props) {
                 <div className={Classes.formContainer}>
                     <form>
                         <textarea value={props.state.valueTextarea} onChange={onChangeHandler}/>
-                        <button type='button' onClick={props.sendMessage}>Send</button>
+                        <button type='button' onClick={sendMessage}>Send</button>
                     </form>
                 </div>
             </div>

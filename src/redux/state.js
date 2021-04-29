@@ -1,3 +1,8 @@
+const ADD_POST = 'ADD-POST';
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const SEND_MESSAGE = 'SEND-MESSAGE';
+const UPDATE_MESSAGE_TEXTAREA = 'UPDATE-MESSAGE-TEXTAREA';
+
 let Store = {
     _state: {
         profilePage: {
@@ -35,54 +40,56 @@ let Store = {
             ]
         }
     },
-
     getState() {
-        debugger
         return this._state;
     },
-
-    _callSubscriber: () => {
+    _callSubscriber() {
         console.log('state was changed');
     },
-
     subscribe(observer) {
         this._callSubscriber = observer;
     },
 
-    addPost() {
+    dispatch(action) {
         let state = this._state;
-        let newPost = {
-            id: 456,
-            text: state.profilePage.value,
-            likeCount: 0
+        switch (action.type) {
+            case ADD_POST:
+                let newPost = {
+                    id: 456,
+                    text: state.profilePage.value,
+                    likeCount: 0
+                }
+                this._state.profilePage.PostData.push(newPost);
+                this._state.profilePage.value = '';
+                this._callSubscriber(this);
+                break;
+            case UPDATE_NEW_POST_TEXT:
+                this._state.profilePage.value = action.text;
+                this._callSubscriber(this);
+                break;
+            case SEND_MESSAGE:
+                let newMessage = {
+                    id: 4561,
+                    message: state.messagesPage.valueTextarea,
+                    isMy: true
+                }
+                this._state.messagesPage.messagesData.push(newMessage);
+                this._state.messagesPage.valueTextarea = '';
+                this._callSubscriber(this);
+                break;
+            case UPDATE_MESSAGE_TEXTAREA:
+                this._state.messagesPage.valueTextarea = action.text;
+                this._callSubscriber(this);
+                break;
         }
-        this._state.profilePage.PostData.push(newPost);
-        this._state.profilePage.value = '';
-        this._callSubscriber(this);
-    },
-
-    updateNewPostText(text) {
-        this._state.profilePage.value = text;
-        this._callSubscriber(this);
-    },
-
-    sendMessage() {
-        console.log(this)
-        let state = this._state;
-        let newMessage = {
-            id: 4561,
-            text: state.messagesPage.valueTextarea,
-            isMy: true
-        }
-        this._state.messagesPage.messagesData.push(newMessage);
-        this._state.messagesPage.valueTextarea = '';
-        this._callSubscriber(this);
-    },
-
-    updateMessageTextarea(text) {
-        this._state.messagesPage.valueTextarea = text;
-        this._callSubscriber(this);
     }
 }
+
+
+export const addPostActionCreator = () => ({type: ADD_POST})
+export const updateNewPostText = (text) => ({type: UPDATE_NEW_POST_TEXT, text: text})
+export const updateMessageTextareaActionCreator = (text) => ({type: UPDATE_MESSAGE_TEXTAREA, text: text})
+export const sendMessageActionCreator = () => ({type: SEND_MESSAGE})
+
 
 export default Store;
