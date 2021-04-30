@@ -6,18 +6,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App/App';
 import {BrowserRouter} from "react-router-dom";
+import {Provider, StoreContext} from "./StoreContext";
 
 let rerenderEntireTree = (store) => {
     ReactDOM.render(
         <BrowserRouter>
-            <App appState={store.getState()} dispatch={store.dispatch.bind(Store)}/>
+            <Provider store={store}>
+                <App store={store}/>
+            </Provider>
         </BrowserRouter>,
         document.getElementById('root')
     );
 }
 
 
-Store.subscribe(()=>{
+Store.subscribe(() => {
     rerenderEntireTree(Store);
 });
 
