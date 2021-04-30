@@ -1,6 +1,6 @@
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Store from "./redux/state";
+import Store from "./redux/redux-store";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -10,14 +10,16 @@ import {BrowserRouter} from "react-router-dom";
 let rerenderEntireTree = (store) => {
     ReactDOM.render(
         <BrowserRouter>
-            <App appState={store.getState()} dispatch={store.dispatch.bind(store)}/>
+            <App appState={store.getState()} dispatch={store.dispatch.bind(Store)}/>
         </BrowserRouter>,
         document.getElementById('root')
     );
 }
 
 
-Store.subscribe(rerenderEntireTree);
+Store.subscribe(()=>{
+    rerenderEntireTree(Store);
+});
 
 rerenderEntireTree(Store);
 
