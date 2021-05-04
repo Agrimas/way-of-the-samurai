@@ -1,0 +1,38 @@
+.container {
+    padding: 10px;
+    background-color: slateblue;
+    display: flex;
+    margin-bottom: .3em;
+}
+
+.avatarBlock {
+    width: 80px;
+    text-align: center;
+}
+
+.avatarBlock img {
+    border-radius: 50px;
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    object-position: top;
+}
+
+.follow {
+    background-color: greenyellow;
+    border: none;
+}
+
+.nameAndStatus {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.info {
+    color: gold;
+    padding: 0 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}

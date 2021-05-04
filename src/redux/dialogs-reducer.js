@@ -1,5 +1,7 @@
 const SEND_MESSAGE = 'SEND-MESSAGE';
 const UPDATE_MESSAGE_TEXTAREA = 'UPDATE-MESSAGE-TEXTAREA';
+const _ = require('lodash');
+
 
 let initialState = {
     valueTextarea: '',
@@ -24,14 +26,19 @@ const dialogsReducer = (state = initialState, action) => {
                 message: state.valueTextarea,
                 isMy: true
             }
-            state.messagesData.push(newMessage);
-            state.valueTextarea = '';
-            break;
+            return {
+                ...state,
+                messagesData: [...state.messagesData, newMessage],
+                valueTextarea: '',
+            }
         case UPDATE_MESSAGE_TEXTAREA:
-            state.valueTextarea = action.text;
-            break;
+            return {
+                ...state,
+                valueTextarea: action.text
+            }
+        default:
+            return state;
     }
-    return state;
 }
 
 export const updateMessageTextareaActionCreator = (text) => ({type: UPDATE_MESSAGE_TEXTAREA, text: text})
