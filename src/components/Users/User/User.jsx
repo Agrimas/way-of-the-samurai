@@ -1,6 +1,7 @@
 import React from 'react';
 import Classes from './User.module.css';
 import userPhoto from '../../../assets/img/user.jpg';
+import {NavLink} from "react-router-dom";
 
 function User(props) {
 
@@ -15,7 +16,9 @@ function User(props) {
     return (
         <div className={Classes.container}>
             <div className={Classes.avatarBlock}>
-                <img src={props.photos.small ? props.photos.small : userPhoto} alt=""/>
+                <NavLink to={`/profile/${props.id}`}>
+                    <img src={props.photos.small ? props.photos.small : userPhoto} alt=""/>
+                </NavLink>
                 <button onClick={props.followed ? unfollow : follow}
                         className={Classes.follow}>{props.followed ? 'Unfollow' : 'Follow'}</button>
             </div>
