@@ -2,7 +2,6 @@ import React from "react";
 import Classes from './ProfileInfo.module.css'
 
 const ProfileInfo = (props) => {
-    debugger
     return (
         <div>
             <img className={Classes.photo} src="https://c.wallhere.com/photos/51/ec/landscape-81752.jpg!d"

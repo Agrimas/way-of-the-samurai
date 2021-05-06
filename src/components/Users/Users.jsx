@@ -27,13 +27,13 @@ function Users(props) {
 
             {
                 props.users.map(u => <User id={u.id}
-                                                key={u.id}
-                                                photos={u.photos}
-                                                name={u.name}
-                                                status={u.status}
-                                                followed={u.followed}
-                                                follow={props.follow}
-                                                unfollow={props.unfollow}/>)
+                                           key={u.id}
+                                           photos={u.photos}
+                                           name={u.name}
+                                           status={u.status}
+                                           followed={u.followed}
+                                           follow={props.follow}
+                                           unFollow={props.unFollow}/>)
             }
 
             <button>Show More</button>
