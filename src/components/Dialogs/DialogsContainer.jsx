@@ -2,6 +2,7 @@ import React from 'react';
 import {sendMessage, updateMessageTextarea} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
+import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 function mapStateToProps(state) {
     return {
@@ -11,6 +12,6 @@ function mapStateToProps(state) {
     }
 }
 
-const DialogsContainer = connect(mapStateToProps, {updateMessageTextarea, sendMessage})(Dialogs);
+const DialogsContainer = WithAuthRedirect(connect(mapStateToProps, {updateMessageTextarea, sendMessage})(Dialogs));
 
 export default DialogsContainer;

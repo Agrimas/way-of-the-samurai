@@ -9,9 +9,11 @@ const Header = (props) => {
                 <img src="https://im0-tub-by.yandex.net/i?id=58b9c9b7af5f19fe14b2fee9cf12b88e&n=13" alt="logo"/>
             </div>
             <div className={Classes.navBlock}>
-                <NavLink className={Classes.loginBLock} to={'/login'}>
-                    {props.isLogin ? props.profileData.fullName : 'Log in'}
-                </NavLink>
+
+                {props.isLogin ?
+                    <NavLink className={Classes.loginBLock} to={'/profile'}>{props.profileData.fullName}</NavLink>
+                    : <NavLink className={Classes.loginBLock} to={'/login'}>Log in</NavLink>}
+
             </div>
         </header>
     );

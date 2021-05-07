@@ -6,7 +6,7 @@ const ProfileInfo = (props) => {
         <div>
             <img className={Classes.photo} src="https://c.wallhere.com/photos/51/ec/landscape-81752.jpg!d"
                  alt="main-img"/>
-            <h1 className={Classes.desciption}>
+            <h1 className={Classes.description}>
                 {props.fullName}
             </h1>
             <p>

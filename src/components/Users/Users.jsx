@@ -32,8 +32,11 @@ function Users(props) {
                                            name={u.name}
                                            status={u.status}
                                            followed={u.followed}
+                                           followingIsProgress={props.followingIsProgress}
+
                                            follow={props.follow}
-                                           unFollow={props.unFollow}/>)
+                                           unFollow={props.unFollow}
+                />)
             }
 
             <button>Show More</button>

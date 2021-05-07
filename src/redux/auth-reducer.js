@@ -1,3 +1,5 @@
+import {AuthAPI, ProfileAPI} from "../api/api";
+
 const SET_USER_DATA = 'SET-USER-DATA';
 const SET_AUTH = 'SET-AUTH';
 
@@ -28,7 +30,23 @@ function authReducer(state = initialState, action) {
     }
 }
 
-export const setUserData = (userData, profileData) => ({type: SET_USER_DATA, userData: userData, profileData: profileData})
+export const setUserData = (userData, profileData) => ({
+    type: SET_USER_DATA,
+    userData: userData,
+    profileData: profileData
+})
 export const setAuth = (isAuth) => ({type: SET_AUTH, isAuth: isAuth})
+
+export const auth = () => (dispatch) => {
+    AuthAPI.auth().then(data => {
+        let userData = data.data;
+        if (data.resultCode === 0) {
+            ProfileAPI.getProfileInfo(userData.id).then(data => {
+                dispatch(setUserData(userData, data));
+                dispatch(setAuth(true));
+            })
+        }
+    })
+}
 
 export default authReducer;
