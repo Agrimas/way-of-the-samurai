@@ -1,21 +1,35 @@
 import React from "react";
 import Classes from './MyPosts.module.css'
 import Post from "./Post/Post";
+import {useFormik} from "formik";
 
 const MyPosts = (props) => {
     let PostElements = props.PostData.map(post => <Post key={post.id} id={post.id} likeCount={post.likeCount}
-                                                        text={post.text}/>)
+                                                        text={post.text}/>);
 
-    let onChangeHandler = (e) => {
-        props.updateNewPostText(e.currentTarget.value)
-    }
+    const formik = useFormik({
+        initialValues: {
+            textarea: '',
+        },
+        onSubmit(values) {
+            props.addPost(values.textarea);
+            formik.resetForm();
+        }
+    })
 
     return (
         <div className={Classes.posts}>
             My posts
-            <form className={Classes.form}>
-                <textarea value={props.valueTextarea} onChange={onChangeHandler}/>
-                <input onClick={props.addPost} type="button" value='Отправить'/>
+            <form onSubmit={formik.handleSubmit} className={Classes.form}>
+                <textarea
+                    id="textarea"
+                    name="textarea"
+                    onChange={formik.handleChange}
+                    value={formik.values.textarea}
+                />
+                <button type="submit">
+                    Отправить
+                </button>
             </form>
             {PostElements}
         </div>

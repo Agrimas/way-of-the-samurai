@@ -1,35 +1,34 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Classes from './User.module.css';
 import userPhoto from '../../../assets/img/user.jpg';
 import {NavLink} from "react-router-dom";
+import {withFetching} from "../../../utils/withFetching";
 
-function User(props) {
+function User({id, name, status, photos, followed, follow, unFollow}) {
 
-    function follow() {
-        props.follow(props.id);
-    }
+    const [isFetching, setFetching] = useState(false);
 
-    function unFollow() {
-        props.unFollow(props.id);
+    const buttonFollowHandler = () => {
+        followed ? withFetching(unFollow, setFetching, [id]) : withFetching(follow, setFetching, [id])
     }
 
     return (
         <div className={Classes.container}>
             <div className={Classes.avatarBlock}>
-                <NavLink to={`/profile/${props.id}`}>
-                    <img src={props.photos.small ? props.photos.small : userPhoto} alt=""/>
+                <NavLink to={`/profile/${id}`}>
+                    <img src={photos.small ? photos.small : userPhoto} alt=""/>
                 </NavLink>
-                <button disabled={props.followingIsProgress.some(id => id === props.id)}
-                        onClick={props.followed ? unFollow : follow}
-                        className={Classes.follow}>{props.followed ? 'Unfollow' : 'Follow'}</button>
+                <button disabled={isFetching}
+                        onClick={buttonFollowHandler}
+                        className={Classes.follow}>{followed ? 'Unfollow' : 'Follow'}</button>
             </div>
             <div className={Classes.info}>
                 <div className={Classes.nameAndStatus}>
                     <div>
-                        {props.name}
+                        {name}
                     </div>
                     <div>
-                        {props.status}
+                        {status}
                     </div>
                 </div>
             </div>

@@ -1,32 +1,59 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getProfile} from "../../redux/profile-reducer";
+import {getProfile, getStatus, updateStatus} from "../../redux/reducers/profile-reducer";
 import {withRouter} from 'react-router-dom';
 import Preloader from "../common/Preloader/Preloader";
-import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
+import {compose} from "redux";
+import {withFetching} from "../../utils/withFetching";
+import {withSuspense} from "../../hoc/withSuspense";
 
-class ProfileContainer extends Component {
-    componentDidMount() {
-        const userId = this.props.match.params.userId || '2';
-        this.props.getProfile(userId);
-    }
+function ProfileContainer(props) {
+    let [firstRender, setFirstRender] = useState(true);
+    let [isFetching, setFetching] = useState(false);
 
-    render() {
-        if (typeof this.props.match.params.userId === 'undefined' &&
-            this.props.profile?.userId &&
-            this.props.profile.userId !== 2) {
-            this.props.getProfile(2);
-        }
-        return !this.props.isFetching ? <Profile profileInfo={this.props.profile}/> : <Preloader/>;
-    }
+    useEffect(async () => {
+            if (firstRender) {
+                setFirstRender(false);
+            }
+            let userId = props.match.params.userId;
+            if (!userId) {
+                userId = props.authId;
+                if (!userId) {
+                    props.history.push('/login');
+                    return;
+                }
+            }
+
+            async function getInfo(id) {
+                await Promise.all([props.getProfile(id), props.getStatus(id)])
+            }
+
+            withFetching(getInfo, setFetching, [+userId])
+        },
+        [props.match.params.userId])
+
+    return (
+        isFetching || firstRender ?
+            <Preloader/> :
+            <Profile
+                profile={props.profile}
+                status={props.status}
+                updateStatus={props.updateStatus}/>
+    );
 }
+
 
 function mapStateToProps(state) {
     return {
+        authId: state.auth.userId,
         profile: state.profilePage.profile,
-        isFetching: state.profilePage.isFetching,
+        status: state.profilePage.status,
     }
 }
 
-export default WithAuthRedirect(connect(mapStateToProps, {getProfile})(withRouter(ProfileContainer)));
+export default compose(connect(mapStateToProps, {
+    getProfile,
+    getStatus,
+    updateStatus
+}), withRouter)(ProfileContainer);

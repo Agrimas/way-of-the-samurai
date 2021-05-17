@@ -1,5 +1,6 @@
 import React from "react";
 import Classes from './ProfileInfo.module.css'
+import Status from './ProfileStatus/ProfileStatus'
 
 const ProfileInfo = (props) => {
     return (
@@ -7,11 +8,9 @@ const ProfileInfo = (props) => {
             <img className={Classes.photo} src="https://c.wallhere.com/photos/51/ec/landscape-81752.jpg!d"
                  alt="main-img"/>
             <h1 className={Classes.description}>
-                {props.fullName}
+                {props.profile?.fullName}
             </h1>
-            <p>
-                {props.aboutMe}
-            </p>
+            <Status status={props.status} updateStatus={props.updateStatus}/>
         </div>
     );
 }

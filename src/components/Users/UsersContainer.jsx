@@ -1,55 +1,71 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import Users from './Users';
-import {
-    follow,
-    getUsers,
-    unFollow,
-} from '../../redux/users-reducer';
+import {follow, requestUsers, unFollow,} from '../../redux/reducers/users-reducer';
 import Preloader from "../common/Preloader/Preloader";
-import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
+import {compose} from "redux";
+import {
+    getCurrentPage,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from "../../redux/selectors/users-selectors";
+import {withFetching} from "../../utils/withFetching";
+import Paginator from "../common/Paginator/Paginator";
 
-class UsersContainer extends React.Component {
-    componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize);
+function UsersContainer({
+                            requestUsers,
+                            currentPage,
+                            pageSize,
+                            users,
+                            totalUsersCount,
+                            follow,
+                            unFollow
+                        }) {
+
+    const [isFetching, setFetching] = useState(false);
+    const [isFirstRender, setIsFirstRender] = useState(true);
+
+    useEffect(() => {
+        if (isFirstRender) setIsFirstRender(false)
+        withFetching(requestUsers, setFetching, [currentPage, pageSize])
+    }, [])
+
+    const onPageChange = async (pageNumber) => {
+        await withFetching(requestUsers, setFetching, [pageNumber, pageSize])
     }
 
-    onPageChange(pageNumber) {
-        this.props.getUsers(pageNumber, this.props.pageSize);
-    }
+    return <>
+        <Paginator
+            totalItemsCount={totalUsersCount}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={onPageChange}
+            portionSize={10}
+        />
+        {isFetching || isFirstRender ? <Preloader/> :
+            <Users
+                users={users}
 
-    render() {
-        return <>
-            {this.props.isFetching ? <Preloader/> :
-                <Users
-                    currentPage={this.props.currentPage}
-                    pageSize={this.props.pageSize}
-                    users={this.props.users}
-                    totalUsersCount={this.props.totalUsersCount}
-                    followingIsProgress={this.props.followingIsProgress}
+                follow={follow}
+                unFollow={unFollow}
+            />}
+    </>
 
-                    onPageChange={this.onPageChange.bind(this)}
-                    follow={this.props.follow}
-                    unFollow={this.props.unFollow}
-                />}
-        </>
-
-    }
 }
 
 function mapStateToProps(state) {
     return {
-        users: state.usersPage.usersData,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingIsProgress: state.usersPage.followingIsProgress,
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
     }
 }
 
-export default WithAuthRedirect(connect(mapStateToProps, {
+export default compose(connect(mapStateToProps, {
     follow,
     unFollow,
-    getUsers,
-})(UsersContainer));
+    requestUsers,
+}))(UsersContainer)
+

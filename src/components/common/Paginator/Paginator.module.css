@@ -1,0 +1,17 @@
+.paginationBlock{
+    background-color: aqua;
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.paginationBlock span:hover{
+    cursor: pointer;
+    color: gold;
+    transition: 0.3s;
+}
+
+.selectedPage{
+    font-weight: bold;
+}

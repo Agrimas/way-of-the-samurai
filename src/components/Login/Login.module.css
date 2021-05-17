@@ -1,0 +1,13 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    row-gap: 2px;
+}
+
+.error {
+    padding: 2px 5px;
+    border-radius: 10%;
+    color: slateblue;
+    background-color: gold;
+}

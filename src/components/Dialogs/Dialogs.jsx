@@ -2,22 +2,16 @@ import React from 'react';
 import Classes from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
+import {Formik, Form, Field, ErrorMessage} from 'formik';
+import * as Yup from "yup";
 
 
-const Dialogs = function (props) {
-    let dialogsElements = props.dialogsData.map(dialog => <DialogItem key={dialog.id} name={dialog.name}
-                                                                      id={dialog.id}/>);
+const Dialogs = function ({dialogsData, messagesData, sendMessage}) {
+    let dialogsElements = dialogsData.map(dialog => <DialogItem key={dialog.id} name={dialog.name}
+                                                                id={dialog.id}/>);
 
-    let messagesElements = props.messagesData.map(message => <Message key={message.id} text={message.message}
-                                                                      isMy={message.isMy}/>)
-
-    function onChangeHandler(e) {
-        props.updateMessageTextarea(e.currentTarget.value);
-    }
-
-    function sendMessage() {
-        props.sendMessage()
-    }
+    let messagesElements = messagesData.map(message => <Message key={message.id} text={message.message}
+                                                                isMy={message.isMy}/>)
 
     return (
         <div className={Classes.dialogs}>
@@ -28,14 +22,33 @@ const Dialogs = function (props) {
                 <div className={Classes.messagesBody}>
                     {messagesElements}
                 </div>
-                <div className={Classes.formContainer}>
-                    <form>
-                        <textarea value={props.valueTextarea} onChange={onChangeHandler}/>
-                        <button type='button' onClick={sendMessage}>Send</button>
-                    </form>
-                </div>
+                <DialogsForm sendMessage={sendMessage}/>
             </div>
         </div>
+    );
+}
+
+const DialogsForm = ({sendMessage}) => {
+    return (
+        <Formik
+            initialValues={{textarea: ''}}
+            validationSchema={Yup.object({
+                textarea: Yup.string()
+                    .max(500, 'Must be 500 characters or less')
+                    .required('Required'),
+            })}
+            onSubmit={(values, actions) => {
+                sendMessage(values.textarea);
+                actions.resetForm();
+            }}>
+            {({}) => (
+                <Form className={Classes.formContainer}>
+                    <Field id="textarea" name="textarea" className={Classes.formTextarea}/>
+                    <ErrorMessage name="textarea" component="div"/>
+                    <button type='submit'>Send</button>
+                </Form>
+            )}
+        </Formik>
     );
 }
 
