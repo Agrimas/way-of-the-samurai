@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/way-of-the-samurai/static/css/main.fa36f7f9.chunk.css",
+    "main.js": "/way-of-the-samurai/static/js/main.ba691e86.chunk.js",
+    "main.js.map": "/way-of-the-samurai/static/js/main.ba691e86.chunk.js.map",
+    "runtime-main.js": "/way-of-the-samurai/static/js/runtime-main.f313588b.js",
+    "runtime-main.js.map": "/way-of-the-samurai/static/js/runtime-main.f313588b.js.map",
+    "static/js/2.90f4665c.chunk.js": "/way-of-the-samurai/static/js/2.90f4665c.chunk.js",
+    "static/js/2.90f4665c.chunk.js.map": "/way-of-the-samurai/static/js/2.90f4665c.chunk.js.map",
+    "static/css/3.58c17608.chunk.css": "/way-of-the-samurai/static/css/3.58c17608.chunk.css",
+    "static/js/3.42f9ab8e.chunk.js": "/way-of-the-samurai/static/js/3.42f9ab8e.chunk.js",
+    "static/js/3.42f9ab8e.chunk.js.map": "/way-of-the-samurai/static/js/3.42f9ab8e.chunk.js.map",
+    "static/css/4.575d44f8.chunk.css": "/way-of-the-samurai/static/css/4.575d44f8.chunk.css",
+    "static/js/4.0b868ae9.chunk.js": "/way-of-the-samurai/static/js/4.0b868ae9.chunk.js",
+    "static/js/4.0b868ae9.chunk.js.map": "/way-of-the-samurai/static/js/4.0b868ae9.chunk.js.map",
+    "static/js/5.0198bae1.chunk.js": "/way-of-the-samurai/static/js/5.0198bae1.chunk.js",
+    "static/js/5.0198bae1.chunk.js.map": "/way-of-the-samurai/static/js/5.0198bae1.chunk.js.map",
+    "index.html": "/way-of-the-samurai/index.html",
+    "static/css/3.58c17608.chunk.css.map": "/way-of-the-samurai/static/css/3.58c17608.chunk.css.map",
+    "static/css/4.575d44f8.chunk.css.map": "/way-of-the-samurai/static/css/4.575d44f8.chunk.css.map",
+    "static/css/main.fa36f7f9.chunk.css.map": "/way-of-the-samurai/static/css/main.fa36f7f9.chunk.css.map",
+    "static/js/2.90f4665c.chunk.js.LICENSE.txt": "/way-of-the-samurai/static/js/2.90f4665c.chunk.js.LICENSE.txt",
+    "static/media/loader.b57ed06f.svg": "/way-of-the-samurai/static/media/loader.b57ed06f.svg",
+    "static/media/user.89565353.jpg": "/way-of-the-samurai/static/media/user.89565353.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f313588b.js",
+    "static/js/2.90f4665c.chunk.js",
+    "static/css/main.fa36f7f9.chunk.css",
+    "static/js/main.ba691e86.chunk.js"
+  ]
+}
