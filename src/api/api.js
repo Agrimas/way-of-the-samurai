@@ -3,7 +3,7 @@ import axios from "axios";
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
-    headers: {'API-KEY': '1ff6f51d-e642-44e0-a765-1ec1a2baad4a'},
+    headers: {'API-KEY': '4e70ea14-87f8-403e-9a3c-6012dce2b89c'},
 });
 
 export const UsersAPI = {
@@ -22,8 +22,8 @@ export const AuthAPI = {
     auth() {
         return instance.get('auth/me/').then(response => response.data);
     },
-    login(email, password, remember = false) {
-        return instance.post('auth/login', {email, password, remember}).then(response => response.data);
+    login(email, password, remember = false, captcha) {
+        return instance.post('auth/login', {email, password, remember, captcha}).then(response => response.data);
     },
     logOut() {
         return instance.delete('auth/login');
@@ -38,6 +38,25 @@ export const ProfileAPI = {
         return instance.get(`profile/status/${id}`).then(response => response.data);
     },
     updateStatus(status) {
-        return instance.put(`profile/status`, {status})
-    }
+        return instance.put(`profile/status`, status)
+    },
+    savePhoto(file) {
+        const formData = new FormData();
+        formData.append('image', file);
+        return instance.put(`profile/photo`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        }).then(response => response.data)
+    },
+    saveProfileInfo(profileInfo) {
+        return instance.put(`profile`, profileInfo).then(response => response.data);
+    },
+
+}
+
+export const SecurityAPI = {
+    getCaptcha() {
+        return instance.get('security/get-captcha-url').then(response => response.data.url);
+    },
 }

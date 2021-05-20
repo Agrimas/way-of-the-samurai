@@ -1,10 +1,80 @@
-.photo {
-	width: 100%;
-	height: 100px;
-	object-fit: cover;
-	object-position: 0% 50%;
+.container {
+    display: flex;
 }
 
-.description{
-	padding: 10px;
+.photo {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    object-position: 0% 50%;
+}
+
+.description {
+    max-width: 100%;
+    margin-bottom: 5px;
+}
+
+.wrapperAvatar {
+    width: 10%;
+    margin: 0 10px;
+}
+
+.wrapperImage {
+    position: relative;
+    padding-top: 100%;
+}
+
+.avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10%;
+    object-position: top;
+}
+
+.input_wrapper {
+    width: 100%;
+    position: relative;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.input_file {
+    opacity: 0;
+    /*visibility: hidden;*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.input_file_button_text {
+    line-height: 1;
+    margin-top: 1px;
+}
+
+.input_file_button {
+    width: 100%;
+    max-width: 290px;
+    height: 60px;
+    background: #1bbc9b;
+    color: #fff;
+    font-size: 1.125rem;
+    font-weight: 700;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 0 auto;
 }

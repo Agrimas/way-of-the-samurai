@@ -7,7 +7,7 @@ function ProfileStatus(props) {
 
     useEffect(() => {
         setStatus(props.status);
-    },[props.status]);
+    }, [props.status]);
 
     const activateEditMode = () => {
         setEditMode(true);
@@ -31,10 +31,9 @@ function ProfileStatus(props) {
                        onChange={updateStatusHandler}
                        type="text"
                        value={status}/> :
-                <div>
-                        <span
-                            onDoubleClick={activateEditMode}>{props.status || 'Статус пуст'}</span>
-                </div>}
+                <span
+                    onDoubleClick={activateEditMode} style={{border: '2px solid black'}}>{props.status || 'Статус пуст'}</span>
+            }
         </>
     );
 }

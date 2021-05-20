@@ -1,8 +1,16 @@
 import React from "react";
 import Classes from './Header.module.css';
-import {NavLink} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 
 const Header = ({isAuth, login, logOut, profile}) => {
+
+    const history = useHistory();
+
+    const quitHandler = async () => {
+        await logOut();
+        history.push(`/login`);
+    }
+
     return (
         <header className={Classes.header}>
             <div className={Classes.logoBlock}>
@@ -12,9 +20,7 @@ const Header = ({isAuth, login, logOut, profile}) => {
                 {isAuth && login ?
                     <>
                         <NavLink className={Classes.loginBLock} to={'/profile'}>{profile?.fullName}</NavLink>
-                        <button className={Classes.loginBLock} onClick={() => {
-                            logOut()
-                        }}>Quit
+                        <button className={Classes.loginBLock} onClick={quitHandler}>Quit
                         </button>
                     </>
                     : <NavLink className={Classes.loginBLock} to={'/login'}>Log in</NavLink>}

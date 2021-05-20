@@ -1,52 +1,56 @@
 import React, {useEffect, useState} from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getProfile, getStatus, updateStatus} from "../../redux/reducers/profile-reducer";
+import {getProfile, getStatus, savePhoto, saveProfileInfo, updateStatus} from "../../redux/reducers/profile-reducer";
 import {withRouter} from 'react-router-dom';
 import Preloader from "../common/Preloader/Preloader";
 import {compose} from "redux";
-import {withFetching} from "../../utils/withFetching";
-import {withSuspense} from "../../hoc/withSuspense";
 
 function ProfileContainer(props) {
     let [firstRender, setFirstRender] = useState(true);
     let [isFetching, setFetching] = useState(false);
 
     useEffect(async () => {
-            if (firstRender) {
-                setFirstRender(false);
-            }
-            let userId = props.match.params.userId;
+        if (firstRender) {
+            setFirstRender(false);
+        }
+
+        let userId = props.match.params.userId;
+        if (!userId) {
+            userId = props.userId
             if (!userId) {
-                userId = props.authId;
-                if (!userId) {
-                    props.history.push('/login');
-                    return;
-                }
+                props.history.push('/login');
+                return
             }
+        }
 
-            async function getInfo(id) {
-                await Promise.all([props.getProfile(id), props.getStatus(id)])
-            }
+        setFetching(true);
+        await props.getProfile(+userId)
+        await props.getStatus(+userId)
+        setFetching(false);
 
-            withFetching(getInfo, setFetching, [+userId])
-        },
-        [props.match.params.userId])
+
+    }, [props.match.params.userId])
 
     return (
         isFetching || firstRender ?
             <Preloader/> :
             <Profile
+                isOwner={!props.match.params.userId}
                 profile={props.profile}
                 status={props.status}
-                updateStatus={props.updateStatus}/>
+                updateStatus={props.updateStatus}
+                savePhoto={props.savePhoto}
+                saveProfileInfo={props.saveProfileInfo}
+            />
     );
 }
 
 
 function mapStateToProps(state) {
     return {
-        authId: state.auth.userId,
+        userId: state.auth.userId,
+        profileAuth: state.auth.profile,
         profile: state.profilePage.profile,
         status: state.profilePage.status,
     }
@@ -55,5 +59,7 @@ function mapStateToProps(state) {
 export default compose(connect(mapStateToProps, {
     getProfile,
     getStatus,
-    updateStatus
+    updateStatus,
+    savePhoto,
+    saveProfileInfo,
 }), withRouter)(ProfileContainer);

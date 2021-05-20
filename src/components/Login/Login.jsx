@@ -15,11 +15,13 @@ function Login() {
     );
 }
 
-const LoginForm = ({isAuth, error, login}) => {
+const LoginForm = ({isAuth, error, login, captcha}) => {
+
     return isAuth ?
         <Redirect to={'/profile'}/> :
         <Formik
             initialValues={{email: '', password: '', remember: false}}
+
             validationSchema={Yup.object({
                 email: Yup.string()
                     .max(50, 'Must be 50 characters or less')
@@ -27,6 +29,7 @@ const LoginForm = ({isAuth, error, login}) => {
                     .required('Required'),
                 password: Yup.string().required('Required'),
             })}
+
             onSubmit={async (values) => {
                 await login(values);
             }}
@@ -34,6 +37,14 @@ const LoginForm = ({isAuth, error, login}) => {
             {({isSubmitting}) => (
                 <Form className={Classes.form}>
                     {error && <div className={Classes.error}>{error}</div>}
+                    {captcha &&
+                    <>
+                        <img src={captcha}/>
+                        <label htmlFor="captcha">Captcha</label>
+                        <Field name='captcha' type="text"/>
+                        <ErrorMessage name="captcha" component="div" className={Classes.error}/>
+                    </>}
+
                     <label htmlFor="email">Login</label>
                     <Field name='email' type="text"/>
                     <ErrorMessage name="email" component="div" className={Classes.error}/>
@@ -53,6 +64,7 @@ function mapStateToProps(state) {
     return {
         isAuth: state.auth.isAuth,
         error: state.auth.error,
+        captcha: state.auth.captcha,
     }
 }
 

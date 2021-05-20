@@ -1,9 +1,10 @@
-import {AuthAPI, ProfileAPI} from "../../api/api";
+import {AuthAPI, ProfileAPI, SecurityAPI} from "../../api/api";
 
 const SET_USER_DATA = 'auth/SET-USER-DATA';
 const SET_USER_PROFILE_DATA = 'auth/SET-USER-PROFILE-DATA';
 const SET_AUTH = 'auth/SET-AUTH';
 const SET_ERROR = 'auth/SET-ERROR';
+const SET_CAPTCHA = 'auth/SET-CAPTCHA';
 
 const initialState = {
     userId: null,
@@ -12,6 +13,7 @@ const initialState = {
     profile: null,
     isFetching: true,
     isAuth: false,
+    captcha: null,
 }
 
 function authReducer(state = initialState, action) {
@@ -38,6 +40,11 @@ function authReducer(state = initialState, action) {
                 ...state,
                 error: action.error,
             }
+        case SET_CAPTCHA:
+            return {
+                ...state,
+                captcha: action.captcha
+            }
         default:
             return state;
     }
@@ -61,6 +68,10 @@ export const setError = (error) => ({
     type: SET_ERROR,
     error,
 })
+export const setCaptcha = (url) => ({
+    type: SET_CAPTCHA,
+    captcha: url
+})
 
 export const auth = () => async (dispatch) => {
     const data = await AuthAPI.auth();
@@ -75,17 +86,25 @@ export const auth = () => async (dispatch) => {
     }
 }
 
-setUserProfileData()
-export const login = ({email, password, remember}) => async (dispatch) => {
-    const data = await AuthAPI.login(email, password, remember)
+export const login = ({email, password, remember, captcha}) => async (dispatch) => {
+    const data = await AuthAPI.login(email, password, remember, captcha)
     if (data.resultCode === 0) {
         dispatch(auth());
         dispatch(setError(''));
     } else {
+        if (data.resultCode === 10) {
+            dispatch(getCaptchaURL());
+        }
         dispatch(setError(data.messages.join()));
     }
     return data;
 }
+
+export const getCaptchaURL = () => async (dispatch) => {
+    const captchaURL = await SecurityAPI.getCaptcha();
+    dispatch(setCaptcha(captchaURL));
+}
+
 export const logOut = () => async (dispatch) => {
     await AuthAPI.logOut();
     await dispatch(setAuth(false));
